@@ -22,6 +22,26 @@ public:
 	void Erase(const int key);
 
 	class Iterator {
+	public:
+		explicit Iterator(const SkipList* list);
+		
+		// Returns true iff the iterator is positioned at a valid node
+		bool Valid() const;
+		
+		const int key() const;
+		
+		void Next();
+		void Prev();
+		
+		// Advance to the first entry with a key>= target
+		void Seek(const int &target);
+		// Postition at the first entry in list.
+		void SeekToFirst();
+		// Postition at the last entry in list
+		void SeekToLast();
+    private:
+		const SkipList* list_;
+		Node* node_;
 	};
 
 	void Debug();
