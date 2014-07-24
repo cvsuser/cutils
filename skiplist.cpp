@@ -114,3 +114,49 @@ void SkipList::Erase(const int key)
 		free(x);
 	}
 }
+
+SkipList::Iterator::Iterator(const SkipList* list)
+{
+	list_ = list;
+	node_ = NULL;
+}
+
+bool SkipList::Iterator::Valid() const
+{
+	return node_!=NULL;
+}
+		
+const int SkipList::Iterator::key() const
+{
+	assert(Valid());
+	return node_->key;
+}
+		
+void SkipList::Iterator::Next()
+{
+	assert(Valid());
+	node_ = node_->Next(0);
+}
+
+void SkipList::Iterator::Prev()
+{
+	// Not Supported.
+	assert(false);
+}
+
+void SkipList::Iterator::Seek(const int &target)
+{
+	// Not Supported.
+	assert(false);
+}
+
+void SkipList::Iterator::SeekToFirst()
+{
+	node_ = list_->head->Next(0);
+}
+
+void SkipList::Iterator::SeekToLast()
+{
+	// Not Supported.
+	assert(false);
+}
