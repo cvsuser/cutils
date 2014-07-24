@@ -1,4 +1,5 @@
 #include <iostream>
+#include <set>
 using namespace std;
 
 #include "testharness.h"
@@ -23,7 +24,43 @@ TEST(SkipListTest, NormalTest) {
 	}
 }
 
+TEST(SkipListTest, IteratorTest) {
+	const int N = 2000;
+	const int R = 5000;
+	std::set<int> keys;
+	SkipList list;
+	for (int i = 0; i < N; i ++) {
+		int k = rand()%R;
+		if (keys.insert(k).second) {
+			list.Insert(k);
+		}
+	}
+	for (int i = 0; i < R; i++) {
+		if (list.Contains(i)) ASSERT_EQ((int)keys.count(i), 1);
+		else ASSERT_EQ((int)keys.count(i), 0);
+	}
+	
+	{//Simple Iterator tests
+		SkipList::Iterator it(&list);
+		ASSERT_TRUE(!it.Valid());
+		
+		it.SeekToFirst();
+		ASSERT_TRUE(it.Valid());
+		ASSERT_EQ(*(keys.begin()), it.key());
+	}
+	
 
+	{//Forwar Iteration test
+		SkipList::Iterator it(&list);
+		std::set<int>::iterator model_it = keys.begin();
+		
+		for(it.SeekToFirst(); it.Valid() && model_it!=keys.end(); it.Next(), model_it++) {
+			ASSERT_EQ(*model_it, it.key());
+		}
+		ASSERT_TRUE(!it.Valid());
+		ASSERT_TRUE(model_it==keys.end());
+	}
+}
 int main(int argc, char **argv)
 {
 	return ::test::RunAllTests();
