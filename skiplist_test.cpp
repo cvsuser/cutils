@@ -50,7 +50,7 @@ TEST(SkipListTest, IteratorTest) {
 	}
 	
 
-	{//Forwar Iteration test
+	{//Forward Iteration test
 		SkipList::Iterator it(&list);
 		std::set<int>::iterator model_it = keys.begin();
 		
