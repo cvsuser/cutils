@@ -15,7 +15,7 @@ COMM_LIBS:=
 TESTHARNESS = $(WORK_PATH)/testharness.o
 
 TARGET   := libutils.a
-TESTS    := ut_test
+TESTS    := ut_test skiplis_test hash_test
 
 all: $(TARGET) $(UTEST)
 	@echo "build utils.a done"
@@ -30,6 +30,11 @@ check: all $(TESTS)
 ut_test: ut_test.o
 	$(CC) $(CFLAGS) -static -Wno-strict-aliasing -o $@ $^ -lpthread $(COMM_LIBS) $(TARGET)
 
+skiplist_test: skiplist_test.o
+	$(CC) $(CFLAGS) -static -Wno-strict-aliasing -o $@ $^ -lpthread $(COMM_LIBS) $(TARGET)
+
+hash_test : hash_test.o
+	$(CC) $(CFLAGS) -static -Wno-strict-aliasing -o $@ $^ -lpthread $(COMM_LIBS) $(TARGET)
 
 clean:
 	rm $(OBJS) $(TARGET) $(TESTS)
