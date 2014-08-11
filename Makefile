@@ -15,7 +15,7 @@ COMM_LIBS:=
 TESTHARNESS = $(WORK_PATH)/testharness.o
 
 TARGET   := libutils.a
-TESTS    := ut_test skiplis_test hash_test
+TESTS    := $(patsubst %.cpp,%,$(wildcard *_test.cpp))
 
 all: $(TARGET)
 	@echo "build utils.a done"
